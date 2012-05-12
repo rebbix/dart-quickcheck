@@ -1,8 +1,14 @@
-class AnyList<T> implements Iterator<List<T>> {
+interface Arbitrary<T> extends Iterator<T> {
+}
+
+abstract class BasicArbitrary<T> implements Arbitrary<T> {
+  bool hasNext() => true;
+}
+
+class ArbitraryList<T> extends BasicArbitrary<List<T>> {
   final Iterator<T> g;
   final int minLen, maxLen;
-  AnyList(this.g, [this.minLen = 0, this.maxLen = 42]);
-  bool hasNext() => true;
+  ArbitraryList(this.g, [this.minLen = 0, this.maxLen = 42]);
   List<T> next() {
     int len = randomInRange(minLen, maxLen);
     List<T> list = new List<T>();
@@ -13,10 +19,16 @@ class AnyList<T> implements Iterator<List<T>> {
   }
 }
 
-class AnyInt implements Iterator<int> {
+class ArbitraryInt extends BasicArbitrary<int> {
   final int start, end;
-  AnyInt(int this.start, int this.end);
-  
-  bool hasNext() => true;
+  ArbitraryInt(int this.start, int this.end);
   int next() => randomInRange(start, end);
 }
+
+class ArbitraryChoice<T> extends BasicArbitrary<T> {
+  final List<T> elements;
+  ArbitraryChoice(List<T> this.elements);
+  T next() => elements[randomInRange(0, elements.length)];
+}
+
+
