@@ -76,15 +76,15 @@ class ArbitraryListBuilder {
   }
 }
 
-class ArbitraryStringBuilder {
+class ArbitraryCharBuilder {
   String rangeStart, rangeEnd;
   var parent;
   
-  ArbitraryStringBuilder(): rangeStart = 'a', rangeEnd = 'z';
-  ArbitraryStringBuilder.withParent(this.parent): rangeStart = 'a', rangeEnd = 'z';
+  ArbitraryCharBuilder(): rangeStart = 'a', rangeEnd = 'z';
+  ArbitraryCharBuilder.withParent(this.parent): rangeStart = 'a', rangeEnd = 'z';
   
   
-  ArbitraryStringBuilder ofRange(String a, String b) {
+  ArbitraryCharBuilder ofRange(String a, String b) {
     this.rangeStart = a;
     this.rangeEnd = b;
     return this;
@@ -119,8 +119,8 @@ class ForAll {
   static ArbitraryListBuilder get lists() =>
       new ArbitraryListBuilder();
   
-  static ArbitraryStringBuilder get strings() =>
-      new ArbitraryStringBuilder();
+  static ArbitraryCharBuilder get chars() =>
+      new ArbitraryCharBuilder();
 
   // static of() 
 }
@@ -146,11 +146,11 @@ class ForAllProxy {
     }
   }
   
-  get strings() {
+  get chars() {
     if (parent !== null) {
-      return new ArbitraryStringBuilder.withParent(parent);
+      return new ArbitraryCharBuilder.withParent(parent);
     } else {
-      return ForAll.strings;
+      return ForAll.chars;
     }
   }
   
