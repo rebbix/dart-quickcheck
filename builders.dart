@@ -77,11 +77,11 @@ class ArbitraryListBuilder {
 }
 
 class ArbitraryCharBuilder {
-  String rangeStart, rangeEnd;
+  String rangeStart = 'a', rangeEnd = 'z';
   var parent;
   
-  ArbitraryCharBuilder(): rangeStart = 'a', rangeEnd = 'z';
-  ArbitraryCharBuilder.withParent(this.parent): rangeStart = 'a', rangeEnd = 'z';
+  ArbitraryCharBuilder();
+  ArbitraryCharBuilder.withParent(this.parent);
   
   
   ArbitraryCharBuilder ofRange(String a, String b) {
