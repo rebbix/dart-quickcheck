@@ -40,5 +40,3 @@ class ArbitraryChoice<T> extends BasicArbitrary<T> {
   ArbitraryChoice(List<T> this.elements);
   T next() => elements[randomInRange(0, elements.length)];
 }
-
-
