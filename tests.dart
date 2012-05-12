@@ -6,6 +6,8 @@ main () {
   
   property("positive ints", ForAll.positiveIntegers, (x) => x > 0);
   property("negative ints", ForAll.negativeIntegers, (x) => x < 0);
+  property("non-negative ints", ForAll.nonNegativeIntegers, (x) => x >= 0);
+  property("non-positive ints", ForAll.nonPositiveIntegers, (x) => x <= 0);
   property("integers", ForAll.integers, (x) => x is int);
 
   checkAll();

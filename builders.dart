@@ -112,13 +112,13 @@ class ForAll {
       integers.greaterThan(0);
   
   static ArbitraryIntBuilder get negativeIntegers() =>
-      integers.lessThan(0);
+      integers.lessThan(0).greaterThan(-42);
   
   static ArbitraryIntBuilder get nonNegativeIntegers() =>
       integers.greaterOrEqual(0);
   
   static ArbitraryIntBuilder get nonPositiveIntegers() =>
-      integers.lessOrEqual(0);
+      integers.lessOrEqual(0).greaterThan(-42);
   
   static ArbitraryListBuilder get lists() =>
       new ArbitraryListBuilder();

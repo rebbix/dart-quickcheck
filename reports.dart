@@ -6,8 +6,9 @@ class Reporter {
   void testStart(Property<Object> p) =>
     print("Testing property: '${p.name}'");
   
-  void testSuccess(Property<Object> p, Results rs) =>
-    print("SUCCESS: '${p.name}' after ${rs.count()} checks.\n");  
+  void testSuccess(Property<Object> p, Results rs) {
+    // print("SUCCESS: '${p.name}' after ${rs.count()} checks.\n");
+  }
   
   void testFail(Property<Object> p, Results rs) =>
     print("FAIL: '${p.name}' after ${rs.count()} checks.\n");
