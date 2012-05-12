@@ -1,8 +1,26 @@
-forAll(name, generator, callable) =>
-    new Property(name, generator, callable);
+prepareArbitrary(g) {
+  if (g is ArbitraryBuilder)
+    return g.toArbitrary();
+  else
+    return g;
+}
 
-forNone(name, generator, callable) =>
-    new Property.negative(name, generator, callable);
+check(name, generator, callable) {
+  return new Property(name, prepareArbitrary(generator), callable);
+}
+
+Property property(name, generator, callable) {
+  Property p = new Property(name, prepareArbitrary(generator), callable);
+  Property.registerProperty(p);
+  return p;
+}
+
+void checkAll() {
+  run(Property.declaredProperties);
+  Property.declaredProperties = null;
+}
+//checkFails(name, generator, callable) =>
+    //new Property.negative(name, prepareArbitrary(generator), callable);
 
 void run(List<Property<Object>> ps) {
   final config = new Config();
@@ -35,7 +53,9 @@ class Suite {
   Suite(this.properties, this.config);
   
   void run() {
-    properties.forEach(_testOne);  
+    var results = [];
+    properties.forEach((p) => results.add(_testOne(p)));
+    config.report.summary(results);
   }
   
   bool _testOne(Property<Object> p) {
@@ -91,6 +111,13 @@ class Property<T> {
   final Function _callable;
   Condition _condition;
   Function _filter = null;
+  static List<Property> declaredProperties;
+  
+  static registerProperty(p) {
+    if (declaredProperties == null)
+      declaredProperties = new List<Property>();
+    declaredProperties.add(p);
+  }
   
   Property(this.name, this._generator, this._callable) {
     _condition = new AcceptPositive();    

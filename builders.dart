@@ -15,7 +15,11 @@ Arbitrary<Object> Single(Object o) => Choice([o]);
 Arbitrary<Object> CharRange(String a, String b) =>     
       Int(a.charCodeAt(0), b.charCodeAt(0)).passThrough((x) => new String.fromCharCodes([x]));
 
-class ArbitraryIntBuilder {
+interface ArbitraryBuilder<T> {
+  Arbitrary<T> toArbitrary();
+}
+
+class ArbitraryIntBuilder implements ArbitraryBuilder<int> {
   int start = 0, end = 42;
   var parent;
   
