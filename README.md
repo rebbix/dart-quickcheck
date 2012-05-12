@@ -1,9 +1,9 @@
-dart-quickcheck
+Dart QuickCheck
 ===============
 
 Abstract
 --------
-Dart quickcheck is a set of hacks developed in a try to port Haskell Quickcheck to Dart language. Abandon all hope you, who wants to actually use it for real project.
+'Dart QuickCheck' (or simply _qc_) is a set of hacks developed in a try to port Haskell Quickcheck to Dart language. Abandon all hope you, who wants to actually use it for real project.
 
 For more info on QuickCheck and property based tetsing read [Wikipedia Article](http://en.wikipedia.org/wiki/QuickCheck)
 
@@ -47,3 +47,5 @@ main() {
   checkAll();
 }
 ```
+
+For more examples take alook at our extensive [set of tests for qc itself](https://github.com/rebbix/dart-quickcheck/blob/master/tests.dart).
