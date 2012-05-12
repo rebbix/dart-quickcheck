@@ -3,6 +3,14 @@ interface Arbitrary<T> extends Iterator<T> {
 
 abstract class BasicArbitrary<T> implements Arbitrary<T> {
   bool hasNext() => true;
+  Arbitrary<Object> passThrough(f) => new PassThroughArbitrary<T>(this, f);
+}
+
+class PassThroughArbitrary<T> extends BasicArbitrary<Object> {
+  final f;
+  final Arbitrary<T> g;
+  PassThroughArbitrary(Arbitrary<T> this.g, this.f);
+  Object next() => f(g.next());
 }
 
 class ArbitraryList<T> extends BasicArbitrary<List<T>> {
