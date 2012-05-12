@@ -6,10 +6,12 @@ abstract class BasicArbitrary<T> implements Arbitrary<T> {
   Arbitrary<Object> passThrough(f) => new PassThroughArbitrary<T>(this, f);
 }
 
+typedef Object MapFunction(Object x);
+
 class PassThroughArbitrary<T> extends BasicArbitrary<Object> {
-  final f;
+  final MapFunction f;
   final Arbitrary<T> g;
-  PassThroughArbitrary(Arbitrary<T> this.g, this.f);
+  PassThroughArbitrary(Arbitrary<T> this.g, MapFunction this.f);
   Object next() => f(g.next());
 }
 
