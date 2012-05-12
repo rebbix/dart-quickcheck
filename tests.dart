@@ -21,6 +21,9 @@ main () {
     (x) => x is List && x.every((e) => e is List)
   );
   
+  property("lists of length", ForAll.lists.ofLength(3).with.integers.between(1, 3), 
+    (xs) => xs.length == 3);
+  
   property("choice", ForAll.objectsIn([1, "a"]), (x) => x == 1 || x == "a");
   property("list of choice", ForAll.lists.with.objectsIn([1, "a"]), 
     (xs) => xs.every((x) => x == 1 || x == "a")
