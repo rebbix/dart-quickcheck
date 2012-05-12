@@ -15,11 +15,10 @@ Arbitrary<Object> Single(Object o) => Choice([o]);
 Arbitrary<Object> CharRange(String a, String b) =>     
       Int(a.charCodeAt(0), b.charCodeAt(0)).passThrough((x) => new String.fromCharCodes([x]));
 
-interface ArbitraryBuilder<T> {
-  Arbitrary<T> toArbitrary();
+interface ArbitraryBuilderMarker<T> {
 }
 
-class ArbitraryIntBuilder implements ArbitraryBuilder<int> {
+class ArbitraryIntBuilder implements ArbitraryBuilderMarker<int> {
   int start = 0, end = 42;
   var parent;
   
@@ -43,7 +42,7 @@ class ArbitraryIntBuilder implements ArbitraryBuilder<int> {
     return this;
   }
   
-  Arbitrary<int> toArbitrary() {
+  Arbitrary<Object> toArbitrary() {
     if(parent !== null) {
       return parent.toArbitrary(Int(start, end));
     } else {
@@ -52,8 +51,8 @@ class ArbitraryIntBuilder implements ArbitraryBuilder<int> {
   }
 }
 
-class ArbitraryListBuilder {
-  int minLength, maxLength;
+class ArbitraryListBuilder implements ArbitraryBuilderMarker {
+  int minLength = 0, maxLength = 42;
   
   var parent;
   
@@ -69,7 +68,7 @@ class ArbitraryListBuilder {
     return this;
   }
   
-  get with() => new ForAllProxy(this);
+  ForAllProxy get with() => new ForAllProxy(this);
   
   Arbitrary toArbitrary(iterator) {
     if (parent !== null) {
@@ -80,7 +79,7 @@ class ArbitraryListBuilder {
   }
 }
 
-class ArbitraryCharBuilder {
+class ArbitraryCharBuilder implements ArbitraryBuilderMarker<String> {
   String rangeStart = 'a', rangeEnd = 'z';
   var parent;
   
@@ -125,7 +124,7 @@ class ForAll {
   
   static ArbitraryCharBuilder get chars() =>
       new ArbitraryCharBuilder();
-
+  
   // static of() 
 }
 
@@ -158,13 +157,17 @@ class ForAllProxy {
     }
   }
   
-  get positiveInteger() => integers.positiveIntegers;
+  ArbitraryIntBuilder get positiveIntegers() => 
+      integers.greaterThan(0);
   
-  get negativeInteger() => integers.negativeIntegers;
+  ArbitraryIntBuilder get negativeIntegers() =>
+      integers.lessThan(0).greaterThan(-42);
   
-  get nonNegativeIntegers() => integers.nonNegativeIntegers;
+  ArbitraryIntBuilder get nonNegativeIntegers() =>
+      integers.greaterOrEqual(0);
   
-  get nonPositiveIntegers() => integers.nonPositiveIntegers;
+  ArbitraryIntBuilder get nonPositiveIntegers() =>
+      integers.lessOrEqual(0).greaterThan(-42);
   
   
 }

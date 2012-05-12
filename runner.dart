@@ -1,5 +1,5 @@
 prepareArbitrary(g) {
-  if (g is ArbitraryBuilder)
+  if (g is ArbitraryBuilderMarker)
     return g.toArbitrary();
   else
     return g;
