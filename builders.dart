@@ -76,6 +76,30 @@ class ArbitraryListBuilder {
   }
 }
 
+class ArbitraryStringBuilder {
+  String rangeStart, rangeEnd;
+  var parent;
+  
+  ArbitraryStringBuilder(): rangeStart = 'a', rangeEnd = 'z';
+  ArbitraryStringBuilder.withParent(this.parent): rangeStart = 'a', rangeEnd = 'z';
+  
+  
+  ArbitraryStringBuilder ofRange(String a, String b) {
+    this.rangeStart = a;
+    this.rangeEnd = b;
+    return this;
+  }
+  
+  Arbitrary toArbitrary() {
+    if (parent !== null) {
+      return parent.toArbitrary(CharRange(rangeStart, rangeEnd));
+    } else {
+      return CharRange(rangeStart, rangeEnd);
+    }
+  }
+
+}
+
 class ForAll {
   static ArbitraryIntBuilder get integers() =>
       new ArbitraryIntBuilder();
@@ -94,6 +118,9 @@ class ForAll {
   
   static ArbitraryListBuilder get lists() =>
       new ArbitraryListBuilder();
+  
+  static ArbitraryStringBuilder get strings() =>
+      new ArbitraryStringBuilder();
 
   // static of() 
 }
@@ -111,6 +138,22 @@ class ForAllProxy {
     }
   }
   
+  get lists() {
+    if (parent !== null) {
+      return new ArbitraryListBuilder.withParent(parent);
+    } else {
+      return ForAll.lists;
+    }
+  }
+  
+  get strings() {
+    if (parent !== null) {
+      return new ArbitraryStringBuilder.withParent(parent);
+    } else {
+      return ForAll.strings;
+    }
+  }
+  
   get positiveInteger() => integers.positiveIntegers;
   
   get negativeInteger() => integers.negativeIntegers;
@@ -119,11 +162,5 @@ class ForAllProxy {
   
   get nonPositiveIntegers() => integers.nonPositiveIntegers;
   
-  get lists() {
-    if (parent !== null) {
-      return new ArbitraryListBuilder.withParent(parent);
-    } else {
-      return ForAll.lists;
-    }
-  }
+  
 }

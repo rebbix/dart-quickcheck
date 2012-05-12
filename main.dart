@@ -11,7 +11,7 @@ main () {
   // g = ForAll.integers.lessThan(5).toArbitrary();
   // forAll(g, (x) => x < 5);
   
-  var lg = ForAll.lists.ofLength(5, 15).with.lists.ofLength(2, 4).with.integers.lessThan(5).toArbitrary();
+  var lg = ForAll.lists.ofLength(5, 15).with.lists.ofLength(2, 4).with.strings.ofRange('a', 'Z').toArbitrary();
   forAll(lg, (List xs) => xs.length  > 10);
 }
 
