@@ -11,7 +11,7 @@ class Reporter {
   }
   
   void testFail(Property<Object> p, Results rs) =>
-    print("FAIL: '${p.name}' after ${rs.count()} checks.\n");
+    print("FAIL: '${p.name}' after ${rs.count()} check(s).\n");
   
   void singleCheck(Result<Object> r) =>
       r.result ? _success(r) : _fail(r);
@@ -19,8 +19,11 @@ class Reporter {
   void summary(List<bool> rs) {
     var failed = rs.filter((r) => !r);
     int numFailed = failed.length;
-    if (numFailed > 0) 
-      print ("FAILURE: ${numFailed} tests failed!");
+    if (numFailed > 0) {
+      print ("\nFAILURE: ${numFailed} test(s) failed!");
+    } else {
+      print ("\nSUCCESS: tested ${rs.length} properties.");
+    }
   }
   
   void _fail(Result<Object> r) =>
