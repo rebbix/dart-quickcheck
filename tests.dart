@@ -21,7 +21,9 @@ main () {
     (x) => x is List && x.every((e) => e is List)
   );
   
-  // property("choice", ForAll.objectsIn([1, "a"]), (x) => x == 1 || x == "a");
-  
+  property("choice", ForAll.objectsIn([1, "a"]), (x) => x == 1 || x == "a");
+  property("list of choice", ForAll.lists.with.objectsIn([1, "a"]), 
+    (xs) => xs.every((x) => x == 1 || x == "a")
+  );
   checkAll();
 }

@@ -100,7 +100,21 @@ class ArbitraryCharBuilder implements ArbitraryBuilderMarker<String> {
       return CharRange(rangeStart, rangeEnd);
     }
   }
+}
 
+class ArbitraryChoiceBuilder implements ArbitraryBuilderMarker<Object> {
+  var parent;  
+  List<Object> elements;
+  
+  ArbitraryChoiceBuilder(this.elements, [this.parent = null]);
+  
+  Arbitrary toArbitrary() {
+    if (parent !== null) {
+      return parent.toArbitrary(Choice(elements));
+    } else {
+      return Choice(elements);
+    }
+  }  
 }
 
 class ForAll {
@@ -125,7 +139,8 @@ class ForAll {
   static ArbitraryCharBuilder get chars() =>
       new ArbitraryCharBuilder();
   
-  // static of() 
+  static ArbitraryChoiceBuilder objectsIn(elements) =>
+      new ArbitraryChoiceBuilder(elements);
 }
 
 class ForAllProxy {
@@ -156,6 +171,9 @@ class ForAllProxy {
       return ForAll.chars;
     }
   }
+  
+  ArbitraryChoiceBuilder objectsIn(elements) =>
+    new ArbitraryChoiceBuilder(elements, parent);
   
   ArbitraryIntBuilder get positiveIntegers() => 
       integers.greaterThan(0);
