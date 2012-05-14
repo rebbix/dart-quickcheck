@@ -3,7 +3,8 @@ Dart QuickCheck
 
 Abstract
 --------
-'Dart QuickCheck' (or simply _qc_) is a set of hacks developed in a try to port Haskell Quickcheck to Dart language. Abandon all hope you, who wants to actually use it for real project.
+'Dart QuickCheck' (or simply _qc_) is a set of hacks developed in a try to port Haskell Quickcheck to Dart language. Abandon all hope you, who want to actually use it for a real project.
+There no plans to maintain or support it.
 
 For more info on QuickCheck and property based tetsing read [Wikipedia Article](http://en.wikipedia.org/wiki/QuickCheck)
 
