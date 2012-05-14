@@ -4,7 +4,7 @@ Dart QuickCheck
 Abstract
 --------
 'Dart QuickCheck' (or simply _qc_) is a set of hacks developed in a try to port Haskell Quickcheck to Dart language. Abandon all hope you, who want to actually use it for a real project.
-There no plans to maintain or support it.
+There are no plans to maintain or support it.
 
 For more info on QuickCheck and property based tetsing read [Wikipedia Article](http://en.wikipedia.org/wiki/QuickCheck)
 
@@ -42,7 +42,7 @@ And then, after very annoying couple of minutes we can actulay test our function
 #import("qc.dart");
 
 main() {
-  property("reverse of reverse of list should equal initial list",
+  property("reverse of reverse of list should equal to initial list",
     ForAll.lists.with.integers,
     (xs) => listsEqual(xs, reverse(reverse(xs))));
   checkAll();
